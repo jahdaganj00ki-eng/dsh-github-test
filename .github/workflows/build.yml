@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck + Tests + Build (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npx --no-install vitest run --reporter=verbose
+        timeout-minutes: 15
+      - name: Verify PPT sources clean
+        run: git diff --exit-code -- packages/ppt-runtime scripts/ppt
+      - name: Build dev package
+        run: |
+          if [ "${{ matrix.os }}" = "windows-2022" ]; then
+            node scripts/verify-target.mjs win32 x64 && node scripts/electron-builder-windows.mjs --win --x64 --publish never --config electron-builder.dev.cjs
+          else
+            node scripts/verify-target.mjs win32 x64 || true
+            npx --no-install electron-builder --dir --config electron-builder.dev.cjs || true
+          fi
+        shell: bash
