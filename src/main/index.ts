@@ -1,4 +1,5 @@
 import { initializeDesktopService, desktopDiagnostics } from './desktop-service'
+import { registerGitHubIpc } from './github'
 import { applyMacosWindowBackdrop } from './macos-window-backdrop'
 import { runtimePackageRoot } from './runtime-package-root'
 import { checkBlockingPluginUpdates, selectPluginRecoveryTarget, PluginRecoveryEvidence, planPluginRecovery, runPluginRecoveryPlan, type PluginRecoveryCheck } from './plugin-recovery-market'
@@ -3407,6 +3408,7 @@ async function bootstrap(): Promise<void> {
     }
   })
   registerHarnessHandlers()
+  registerGitHubIpc()
   mobileBridge = new LanMobileBridge({
     harnessUrl: () => runtime.snapshot().url,
     harnessAuthToken: () => runtime.snapshot().authToken,

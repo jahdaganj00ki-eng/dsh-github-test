@@ -274,6 +274,7 @@
     "@deepseek-ai/dsh-workspace": "0.1.7-rc.2",
     "@deepseek-ai/schemastery": "3.18.4",
     "dsh-desktop-client-ui": "file:packages/dsh-desktop-client-ui",
+    "dsh-desktop-github": "file:packages/dsh-desktop-github",
     "dsh-desktop-hmr-fallback": "file:packages/dsh-desktop-hmr-fallback",
     "dsh-desktop-log-bridge": "file:packages/dsh-desktop-log-bridge",
     "dsh-desktop-market-installer": "file:packages/dsh-desktop-market-installer",
@@ -298,7 +299,7 @@
     "electron-builder": "26.15.3",
     "electron-vite": "5.0.0",
     "patch-package": "^8.0.1",
-    "typescript": "5.9.3",
+    "typescript": "^5.9.3",
     "vitest": "^4.1.10",
     "yaml": "^2.8.3"
   },
@@ -489,5 +490,9 @@
       "createStartMenuShortcut": true
     },
     "afterPack": "scripts/verify-packaged-ppt-runtime.cjs"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
   }
 }

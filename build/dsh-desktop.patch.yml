@@ -60,3 +60,7 @@
 - insert:
     - id: dsh-desktop-preset-transfer
       name: dsh-desktop-preset-transfer
+
+- insert:
+    - id: dsh-desktop-github
+      name: dsh-desktop-github
